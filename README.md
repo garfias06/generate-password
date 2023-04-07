@@ -9,6 +9,8 @@ This web application generates a random password when the user selects from 8 to
 ![character-selection](./images/options.png)
 ![password-displayed](./images/passworddisplayed.png)
 
+URL: https://garfias06.github.io/generate-password/
+
 ## Credits
 Tutor: Jose Lopez.
 https://www.w3schools.com/
