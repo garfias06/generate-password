@@ -1,81 +1,73 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// Types of characters
 
-var lower=["abcdefghijklmnopqrstuvwxyz"];
-var upper=["ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
-var Num=["0123456789"];
-var special=["!#$%&()*+,-./?@"];
+var lower = "abcdefghijklmnopqrstuvwxyz".split("");
+var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+var Num = "0123456789".split("");
+var symbols = "!#$%&()*+,-./?@".split("");
 
-// User interaction
-var userInput="";
-var finalPassword=[""];
-// Validate Passwords
+function generatePassword() {
+    // ask the user fo the length of the password
+    // validate that the password is between 8-128 characters
+    var userChoiceLength = prompt("Select between 8 and 128 characters")
+    var megaArrayCharacters = [];
+    var finalPassword = [];
 
-var lower1="";
-var upper1="";
-var Num1="";
-var special1="";
-// Functions
-alert("Select between 8-120 characters");
-characterChoice();
+    if (userChoiceLength < 8 || userChoiceLength > 128) {
+        alert('not the recommended character length')
+        return null
+    }
 
-function characterChoice(){
-userInput=prompt("How many characters do you need?");
-if(userInput <8 || userInput>128){
-    alert("Wrong selection, choose between 8-120 characters");
-    characterChoice();
-  }else(userInput >=8 || userInput <=128);{
-    compareLower();
-  }
-  };
-  function compareLower(){
-    Lcase=confirm("Do you need LowerCase?");
-    if(Lcase){
-  finalPassword.push("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z");
-    }else{
-      compareUpper();
+    // ask the user if they want uppercase, lowercase, symbols, or numbers
+    var userChoiceLower = confirm("Do you need LowerCase?");
+    var userChoiceUpper = confirm("Do you need UpperCase?");
+    var userChoiceNumber = confirm("Do you need Numbers?");
+    var userChoiceSymbols = confirm("Do you need Symbols?");
+
+    // we need to validate that atleast one choices is selected
+    if (!userChoiceLower && !userChoiceNumber && !userChoiceUpper && !userChoiceSymbols) {
+        alert('Please select at least one option')
+        return null
     }
-  };
-  function compareUpper(){
-    Ucase=confirm("Do you need UpperCase?");
-    if(Lcase){
-    finalPassword.push("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
-    }else{
-      compareNum();
+
+    if (userChoiceLower) {
+        megaArrayCharacters = megaArrayCharacters.concat(lower)
     }
-  };
-  function compareNum(){
-    Num2=confirm("Do you need Numbers?");
-    if(Num2){
-    finalPassword.push("0","1","2","3","4","5","6","7","8","9");
-    }else{
-      compareSpecial();
+
+    if (userChoiceUpper) {
+        megaArrayCharacters = megaArrayCharacters.concat(upper)
     }
-  };
-  function compareSpecial(){
-    Special2=confirm("Do you need Special Characters?");
-    if(Special2){
-    finalPassword.push("!","#","$","%","&","*","+",",","-",".","/","?","@");
-    }else{
-      generatePassword();
+
+    if (userChoiceNumber) {
+        megaArrayCharacters = megaArrayCharacters.concat(Num)
     }
-  };
-  function generatePassword(){
-    var realPassword="";
-    for(var i=0; i<finalPassword.length; i++);
-    realPassword+=finalPassword[i];
-};
+
+    if (userChoiceSymbols) {
+        megaArrayCharacters = megaArrayCharacters.concat(symbols)
+    }
+
+    for (var i = 0; i < userChoiceLength; i++) {
+        //   randomize the megacharacterarry and push one character per loop into the final password array
+        var randomChar = megaArrayCharacters[Math.floor(Math.random() * megaArrayCharacters.length)];
+
+        finalPassword.push(randomChar);
+
+    }
+
+    // how to return the array with no commas
+    return finalPassword.join("");
+}
 
 // Write password to the #password input
 function writePassword() {
     var password = generatePassword();
     var passwordText = document.querySelector("#password");
-  
+
     passwordText.value = password;
-  
-  }
-  
-  // Add event listener to generate button
-  generateBtn.addEventListener("click", writePassword);
+};
+
+// Add event listener to generate button
+generateBtn.addEventListener("click", writePassword);
+
+
